@@ -10,19 +10,27 @@
   --bg-card: #ffffff;
   --bg-pill: #e5e5e5;
   --bg-pill-hover: #d4d4d4;
-
   --border-subtle: rgba(0, 0, 0, 0.08);
-
   --text-primary: #111111;
   --text-secondary: #4a4a4a;
   
   --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-  --font-mono: 'JetBrains Mono', 'Fira Code', monospace;
-  
   --radius-pill: 9999px;
   --radius-lg: 12px;
   --radius-xl: 16px;
-  --radius-2xl: 20px;
+  --transition-smooth: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.dark-mode {
+  --bg-primary: #0a0a0a;
+  --bg-secondary: #111111;
+  --bg-tertiary: #1a1a1a;
+  --bg-card: #141414;
+  --bg-pill: #222222;
+  --bg-pill-hover: #333333;
+  --border-subtle: rgba(255, 255, 255, 0.08);
+  --text-primary: #ffffff;
+  --text-secondary: #a0a0a0;
 }
 
 *, *::before, *::after {
@@ -643,5 +651,217 @@ button {
 }
 
 .icon-action-btn.ghost:hover {
-  color: #1a1a1a;
+  color: var(--text-primary);
+}
+
+/* ============================================
+   Settings Drawer Styles
+   ============================================ */
+
+.drawer-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.1);
+  backdrop-filter: blur(4px);
+  z-index: 200;
+  opacity: 0;
+}
+
+.settings-drawer {
+  position: absolute;
+  top: 0;
+  left: 72px; /* Next to sidebar */
+  width: 320px;
+  height: 100vh;
+  background: var(--bg-primary);
+  border-right: 1px solid var(--border-subtle);
+  box-shadow: 20px 0 50px rgba(0,0,0,0.05);
+  display: flex;
+  flex-direction: column;
+  padding: 32px 0;
+}
+
+.drawer-header {
+  padding: 0 24px;
+  margin-bottom: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.drawer-title {
+  font-size: 1.5rem;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  color: var(--text-primary);
+}
+
+.drawer-close-btn {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--text-secondary);
+  transition: all 0.2s;
+}
+
+.drawer-close-btn:hover {
+  background: var(--bg-tertiary);
+  color: var(--text-primary);
+}
+
+.drawer-content {
+  flex: 1;
+  overflow-y: auto;
+  padding: 0 16px;
+}
+
+.drawer-section {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  margin-bottom: 24px;
+}
+
+.section-label {
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: var(--text-secondary);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  margin-bottom: 12px;
+  padding-left: 8px;
+}
+
+.drawer-item {
+  width: 100%;
+  padding: 12px;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  transition: var(--transition-smooth);
+  color: var(--text-primary);
+}
+
+.drawer-item:hover {
+  background: var(--bg-tertiary);
+}
+
+.item-icon-bg {
+  width: 36px;
+  height: 36px;
+  border-radius: 10px;
+  background: var(--bg-tertiary);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--text-secondary);
+}
+
+.item-icon-bg.danger {
+  background: rgba(230, 0, 35, 0.1);
+  color: #e60023;
+}
+
+.drawer-item.danger:hover {
+  background: rgba(230, 0, 35, 0.05);
+}
+
+.item-label {
+  flex: 1;
+  font-size: 0.9375rem;
+  font-weight: 600;
+  text-align: left;
+}
+
+.item-arrow {
+  color: var(--text-secondary);
+  opacity: 0.5;
+}
+
+.drawer-divider {
+  height: 1px;
+  background: var(--border-subtle);
+  margin: 16px 8px 32px;
+}
+
+.drawer-footer {
+  padding: 24px;
+}
+
+.footer-links {
+  display: flex;
+  gap: 12px;
+  margin-bottom: 8px;
+}
+
+.footer-links span {
+  font-size: 0.8125rem;
+  font-weight: 700;
+  color: #0066ff;
+  cursor: pointer;
+}
+
+.footer-links span:hover {
+  text-decoration: underline;
+}
+
+/* Custom Toggle Switch */
+.toggle-switch {
+  width: 44px;
+  height: 24px;
+  border-radius: 12px;
+  background: var(--bg-pill);
+  position: relative;
+  transition: var(--transition-smooth);
+}
+
+.toggle-switch.on {
+  background: #1a1a1a;
+}
+
+.dark-mode .toggle-switch.on {
+  background: #fff;
+}
+
+.toggle-knob {
+  position: absolute;
+  top: 4px;
+  left: 4px;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background: #fff;
+  transition: var(--transition-smooth);
+}
+
+.toggle-switch.on .toggle-knob {
+  left: 24px;
+}
+
+.dark-mode .toggle-switch.on .toggle-knob {
+  background: #000;
+}
+
+.dark-mode .minimal-card, .dark-mode .sidebar-strip {
+  background-color: var(--bg-secondary);
+}
+
+.dark-mode .card-actions-top button {
+  background-color: #222;
+  border-color: #333;
+}
+
+.dark-mode .filter-chip {
+  background-color: #1a1a1a;
+  border-color: #333;
+  color: #fff;
+}
+
+.dark-mode .filter-chip.active {
+  background-color: #fff;
+  color: #000;
 }

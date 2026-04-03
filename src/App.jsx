@@ -6,6 +6,7 @@ import BoardGrid from './components/BoardGrid';
 import Sidebar from './components/Sidebar';
 import CreateBoardModal from './components/CreateBoardModal';
 import AddLinkModal from './components/AddLinkModal';
+import SettingsDrawer from './components/SettingsDrawer';
 import initialLinks from './data/links.json';
 
 const DEFAULT_BOARDS = [
@@ -30,6 +31,10 @@ export default function App() {
   const [searchQuery, setSearchQuery] = useState('');
   const [isBoardModalOpen, setIsBoardModalOpen] = useState(false);
   const [isLinkModalOpen, setIsLinkModalOpen] = useState(false);
+  const [isSettingsOpen, setIsSettingsOpen] = useState(false);
+  const [darkMode, setDarkMode] = useState(() => {
+    return localStorage.getItem('linkter-dark-mode') === 'true';
+  });
 
   // Sync to localStorage
   useEffect(() => {
@@ -39,6 +44,10 @@ export default function App() {
   useEffect(() => {
     localStorage.setItem('linkter-boards', JSON.stringify(boards));
   }, [boards]);
+
+  useEffect(() => {
+    localStorage.setItem('linkter-dark-mode', darkMode);
+  }, [darkMode]);
 
   // Filtered links logic
   const filteredLinks = useMemo(() => {
@@ -100,8 +109,26 @@ export default function App() {
     setCurrentView('feed');
   };
 
+  const handleExportData = () => {
+    const data = { links, boards };
+    const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = `linkter-export-${new Date().toISOString().slice(0, 10)}.json`;
+    a.click();
+    URL.revokeObjectURL(url);
+  };
+
+  const handleResetApp = () => {
+    if (window.confirm('Are you sure you want to reset Linkter? All your links and boards will be permanently deleted.')) {
+      localStorage.clear();
+      window.location.reload();
+    }
+  };
+
   return (
-    <div className="app-layout">
+    <div className={`app-layout ${darkMode ? 'dark-mode' : ''}`}>
       {/* 0. Sidebar Navigation */}
       <Sidebar 
         currentView={currentView}
@@ -111,6 +138,7 @@ export default function App() {
         onBoardClick={navigateToBoard}
         onAddLink={() => setIsLinkModalOpen(true)}
         onCreateBoard={() => setIsBoardModalOpen(true)}
+        onSettingsClick={() => setIsSettingsOpen(true)}
       />
 
       <main className="main-content">
@@ -144,7 +172,7 @@ export default function App() {
           )}
         </div>
 
-        {/* 4. Modals */}
+        {/* 4. Modals / Drawer */}
         <CreateBoardModal 
           isOpen={isBoardModalOpen} 
           onClose={() => setIsBoardModalOpen(false)} 
@@ -154,6 +182,14 @@ export default function App() {
           isOpen={isLinkModalOpen} 
           onClose={() => setIsLinkModalOpen(false)} 
           onAdd={handleAddLink} 
+        />
+        <SettingsDrawer 
+          isOpen={isSettingsOpen}
+          onClose={() => setIsSettingsOpen(false)}
+          darkMode={darkMode}
+          onToggleDarkMode={() => setDarkMode(!darkMode)}
+          onExportData={handleExportData}
+          onResetApp={handleResetApp}
         />
       </main>
     </div>

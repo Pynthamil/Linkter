@@ -7,7 +7,8 @@ export default function Sidebar({
   activeBoardId, 
   onBoardClick,
   onAddLink,
-  onCreateBoard
+  onCreateBoard,
+  onSettingsClick
 }) {
   return (
     <aside className="sidebar-strip">
@@ -64,7 +65,7 @@ export default function Sidebar({
           <Plus size={24} strokeWidth={2.5} />
         </button>
         <div className="mini-divider" />
-        <button className="icon-action-btn ghost" title="Settings">
+        <button className="icon-action-btn ghost" title="Settings" onClick={onSettingsClick}>
           <Settings size={24} />
         </button>
       </div>
