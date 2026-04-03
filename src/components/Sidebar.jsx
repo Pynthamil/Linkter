@@ -14,7 +14,7 @@ export default function Sidebar({
       <div className="sidebar-top">
         <div className="sidebar-logo-v" title="Linkter Home" onClick={() => { onViewChange('feed'); onBoardClick(null); }}>
           <div className="logo-icon-v">
-            <Link2 size={24} color="white" strokeWidth={2.5} />
+            <span className="logo-letter">L</span>
           </div>
         </div>
       </div>

@@ -558,12 +558,20 @@ button {
 .logo-icon-v {
   width: 44px;
   height: 44px;
-  background-color: #e60023; /* Pinterest Red for pop */
-  border-radius: 50%;
+  background-color: #1a1a1a;
+  border-radius: 12px;
   display: flex;
   align-items: center;
   justify-content: center;
-  box-shadow: 0 4px 10px rgba(230, 0, 35, 0.3);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.logo-letter {
+  color: #fff;
+  font-size: 1.5rem;
+  font-weight: 800;
+  line-height: 1;
+  font-family: var(--font-sans);
 }
 
 .mini-nav {
