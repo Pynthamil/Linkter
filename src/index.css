@@ -37,12 +37,18 @@ body {
   color: var(--text-primary);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  /* Using default OS cursor for now */
+  cursor: auto;
 }
 
 #root {
   max-width: 1400px;
   margin: 0 auto;
   padding: 32px;
+}
+
+a, button, .filter-chip {
+  cursor: pointer;
 }
 
 a {
@@ -63,30 +69,47 @@ button {
 
 .filter-bar {
   display: flex;
-  justify-content: center;
+  justify-content: flex-start;
   align-items: center;
-  gap: 16px;
-  flex-wrap: wrap;
+  gap: 12px;
+  /* Improved design: Horizontal scrolling without wrapping for a sleeker look */
+  flex-wrap: nowrap;
+  overflow-x: auto;
   margin-bottom: 48px;
+  padding-bottom: 12px;
+  padding-left: 20px;
+  padding-right: 20px;
+  /* Hide scrollbar for clean look */
+  -ms-overflow-style: none;  /* IE and Edge */
+  scrollbar-width: none;  /* Firefox */
+}
+
+.filter-bar::-webkit-scrollbar {
+  display: none; /* Chrome, Safari and Opera */
 }
 
 .filter-chip {
-  padding: 8px 20px;
+  padding: 8px 24px;
   border-radius: var(--radius-pill);
-  background-color: var(--bg-pill);
-  color: var(--text-primary);
+  background-color: #ffffff;
+  color: #1a1a1a;
   font-size: 0.9375rem;
   font-weight: 500;
-  transition: background-color 0.2s ease;
+  white-space: nowrap;
+  transition: all 0.2s ease;
+  border: 1.5px solid #1a1a1a;
 }
 
 .filter-chip:hover {
-  background-color: var(--bg-pill-hover);
+  background-color: #1a1a1a;
+  color: #ffffff;
+  transform: translateY(-1px);
 }
 
 .filter-chip.active {
-  background-color: var(--text-primary);
-  color: #fff;
+  background-color: #1a1a1a;
+  color: #ffffff;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
 }
 
 /* ============================================
@@ -106,15 +129,6 @@ button {
   letter-spacing: -0.05em;
   margin-bottom: 24px;
   color: #1a1a1a;
-}
-
-.hero-illustration {
-  width: 100%;
-  max-width: 600px;
-  height: auto;
-  margin-bottom: -40px; /* Pull the cards up slightly closer */
-  user-select: none;
-  pointer-events: none;
 }
 
 /* ============================================
