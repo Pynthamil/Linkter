@@ -3,7 +3,9 @@ import TagFilter from './components/TagFilter';
 import HeroSearch from './components/HeroSearch';
 import MasonryGrid from './components/MasonryGrid';
 import BoardGrid from './components/BoardGrid';
+import Sidebar from './components/Sidebar';
 import CreateBoardModal from './components/CreateBoardModal';
+import AddLinkModal from './components/AddLinkModal';
 import initialLinks from './data/links.json';
 
 const DEFAULT_BOARDS = [
@@ -27,6 +29,7 @@ export default function App() {
   const [activeTag, setActiveTag] = useState('All');
   const [searchQuery, setSearchQuery] = useState('');
   const [isBoardModalOpen, setIsBoardModalOpen] = useState(false);
+  const [isLinkModalOpen, setIsLinkModalOpen] = useState(false);
 
   // Sync to localStorage
   useEffect(() => {
@@ -70,6 +73,10 @@ export default function App() {
     return result;
   }, [links, activeTag, searchQuery, activeBoardId, boards]);
 
+  const handleAddLink = (newLink) => {
+    setLinks(prev => [newLink, ...prev]);
+  };
+
   const handleAddBoard = (newBoard) => {
     setBoards(prev => [...prev, newBoard]);
   };
@@ -94,41 +101,61 @@ export default function App() {
   };
 
   return (
-    <>
-      {/* 1. Pill Filter Bar at the very top */}
-      <TagFilter 
-        activeTag={activeTag} 
-        onTagChange={setActiveTag} 
+    <div className="app-layout">
+      {/* 0. Sidebar Navigation */}
+      <Sidebar 
         currentView={currentView}
         onViewChange={setCurrentView}
-        activeBoard={boards.find(b => b.id === activeBoardId)}
-        onReset={resetFilters}
+        boards={boards}
+        activeBoardId={activeBoardId}
+        onBoardClick={navigateToBoard}
+        onAddLink={() => setIsLinkModalOpen(true)}
+        onCreateBoard={() => setIsBoardModalOpen(true)}
       />
 
-      {/* 2. Hero Component */}
-      <HeroSearch searchQuery={searchQuery} setSearchQuery={setSearchQuery} />
-
-      {/* 3. Main Content Grid holding either Cards or Board folders */}
-      {currentView === 'boards' ? (
-        <BoardGrid 
-          boards={boards} 
-          onBoardClick={navigateToBoard} 
-          onCreateClick={() => setIsBoardModalOpen(true)} 
+      <main className="main-content">
+        {/* 1. Pill Filter Bar */}
+        <TagFilter 
+          activeTag={activeTag} 
+          onTagChange={setActiveTag} 
+          currentView={currentView}
+          onViewChange={setCurrentView}
+          activeBoard={boards.find(b => b.id === activeBoardId)}
+          onReset={resetFilters}
         />
-      ) : (
-        <MasonryGrid 
-          links={filteredLinks} 
-          boards={boards} 
-          onAddToBoard={handleAddToBoard}
-        />
-      )}
 
-      {/* 4. Modals */}
-      <CreateBoardModal 
-        isOpen={isBoardModalOpen} 
-        onClose={() => setIsBoardModalOpen(false)} 
-        onAdd={handleAddBoard} 
-      />
-    </>
+        {/* 2. Hero Component */}
+        <HeroSearch searchQuery={searchQuery} setSearchQuery={setSearchQuery} />
+
+        {/* 3. Main content area */}
+        <div className="scroll-content">
+          {currentView === 'boards' ? (
+            <BoardGrid 
+              boards={boards} 
+              onBoardClick={navigateToBoard} 
+              onCreateClick={() => setIsBoardModalOpen(true)} 
+            />
+          ) : (
+            <MasonryGrid 
+              links={filteredLinks} 
+              boards={boards} 
+              onAddToBoard={handleAddToBoard}
+            />
+          )}
+        </div>
+
+        {/* 4. Modals */}
+        <CreateBoardModal 
+          isOpen={isBoardModalOpen} 
+          onClose={() => setIsBoardModalOpen(false)} 
+          onAdd={handleAddBoard} 
+        />
+        <AddLinkModal 
+          isOpen={isLinkModalOpen} 
+          onClose={() => setIsLinkModalOpen(false)} 
+          onAdd={handleAddLink} 
+        />
+      </main>
+    </div>
   );
 }
