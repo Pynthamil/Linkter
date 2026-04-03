@@ -3,7 +3,7 @@ import LinkCard from './LinkCard';
 import SkeletonCard from './SkeletonCard';
 import EmptyState from './EmptyState';
 
-export default function MasonryGrid({ links }) {
+export default function MasonryGrid({ links, boards, onAddToBoard }) {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -28,11 +28,16 @@ export default function MasonryGrid({ links }) {
     return <EmptyState />;
   }
 
-  // Renamed the component to reflect it handles the grid, though the filename remains MasonryGrid for historical reasons
   return (
     <div className="main-grid" id="main-grid">
       {links.map((link, index) => (
-        <LinkCard key={link.id} link={link} index={index} />
+        <LinkCard 
+          key={link.id} 
+          link={link} 
+          index={index} 
+          boards={boards} 
+          onAddToBoard={onAddToBoard}
+        />
       ))}
     </div>
   );
