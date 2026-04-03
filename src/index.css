@@ -75,7 +75,7 @@ button {
   /* Improved design: Horizontal scrolling without wrapping for a sleeker look */
   flex-wrap: nowrap;
   overflow-x: auto;
-  margin-bottom: 48px;
+  margin-bottom: 24px;
   padding-bottom: 12px;
   padding-left: 20px;
   padding-right: 20px;
@@ -120,14 +120,15 @@ button {
   display: flex;
   flex-direction: column;
   align-items: center;
-  margin-bottom: 64px;
+  margin-bottom: 32px;
 }
 
 .hero-title {
   font-size: 4rem;
   font-weight: 800;
   letter-spacing: -0.05em;
-  margin-bottom: 24px;
+  margin-bottom: 8px;
+  line-height: 1.1;
   color: #1a1a1a;
 }
 

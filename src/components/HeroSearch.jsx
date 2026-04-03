@@ -17,20 +17,20 @@ export default function HeroSearch({ searchQuery, setSearchQuery }) {
 
   return (
     <div className="hero-section" ref={containerRef} style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-      <h1 className="hero-title" style={{ marginBottom: '0px' }}>Linkter.</h1>
-      
+      <h1 className="hero-title">Linkter.</h1>
+
       <div style={{ position: 'relative', width: '100%', maxWidth: '580px', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-        
+
         {/* New Minimalist Avatar completely replacing the old illustration */}
-        <img 
-          src={avatarImg} 
-          alt="Avatar" 
-          style={{ 
-            width: '280px', // Scaled appropriately to fit nicely on top of the search bar
-            display: 'block', 
+        <img
+          src={avatarImg}
+          alt="Avatar"
+          style={{
+            width: '380px', // Scaling up slightly for a bit more presence
+            display: 'block',
             pointerEvents: 'none',
-            // Pull the avatar down slightly so its drawn base line merges perfectly with our search bar's top border
-            marginBottom: '-16px',
+            // Pull the avatar down slightly more to match its larger scale
+            marginBottom: '-60px',
             position: 'relative',
             zIndex: 1
           }}
@@ -49,11 +49,11 @@ export default function HeroSearch({ searchQuery, setSearchQuery }) {
           borderRadius: '12px',
           padding: '0 12px',
           // Gentle drop-shadow to lift it slightly off the page
-          boxShadow: '0 8px 30px rgba(0,0,0,0.04)' 
+          boxShadow: '0 8px 30px rgba(0,0,0,0.04)'
         }}>
           <Search size={26} color="#1a1a1a" strokeWidth={2.5} style={{ marginLeft: '8px', marginRight: '16px' }} />
-          
-          <input 
+
+          <input
             type="text"
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
@@ -83,10 +83,10 @@ export default function HeroSearch({ searchQuery, setSearchQuery }) {
             transition: 'all 0.1s ease',
             cursor: 'pointer'
           }}
-          onMouseEnter={e => e.currentTarget.style.backgroundColor = '#333333'}
-          onMouseLeave={e => e.currentTarget.style.backgroundColor = '#1a1a1a'}
-          onMouseDown={e => e.currentTarget.style.transform = 'scale(0.95)'}
-          onMouseUp={e => e.currentTarget.style.transform = 'scale(1)'}>
+            onMouseEnter={e => e.currentTarget.style.backgroundColor = '#333333'}
+            onMouseLeave={e => e.currentTarget.style.backgroundColor = '#1a1a1a'}
+            onMouseDown={e => e.currentTarget.style.transform = 'scale(0.95)'}
+            onMouseUp={e => e.currentTarget.style.transform = 'scale(1)'}>
             <Send size={20} color="#ffffff" strokeWidth={2.5} style={{ marginRight: '2px', marginTop: '2px' }} />
           </button>
         </div>
